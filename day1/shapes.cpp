@@ -60,6 +60,7 @@ class BigSquare : public Square
 public:
     explicit BigSquare(double side, Point top_left)
     :Square(side,top_left){}
+    virtual ~BigSquare()override{}
 
     virtual void Draw()const override{
         //描画する
