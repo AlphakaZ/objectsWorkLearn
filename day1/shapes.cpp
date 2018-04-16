@@ -71,9 +71,18 @@ class DrawingTool
 {
 public:
     void DrawAllShapes(const std::vector<IShape*> &shapes)const{
+
         for(const auto& shape : shapes){
-            shape->Draw();
+            // shape->Draw();
+            Circle* s = dynamic_cast<Circle*>(shape);
+            if(s)shape->Draw();
         }
+        for(const auto& shape : shapes){
+            // shape->Draw();
+            Square* s = dynamic_cast<Square*>(shape);
+            if(s)s->Draw();
+        }
+
     }
 };
 
