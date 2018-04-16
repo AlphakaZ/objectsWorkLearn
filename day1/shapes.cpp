@@ -1,15 +1,22 @@
+#include <vector>
+#include <iostream>
 
 struct Point
 {
     double x,y;
-    Point(double xx, double yy):x(xx),y,(yy){}
+    Point(double xx, double yy):x(xx),y(yy){}
 };
 
 class IShape
 {
+    //小さいほど先に描画される
+    int rank_;
 public:
     virtual void Draw()const = 0;
+    IShape(int rank = 0):rank_(rank){}
     virtual ~IShape(){}
+
+    int GetRank()const{return rank_;}
 };
 
 class Circle : public IShape
@@ -20,11 +27,12 @@ protected:
 
 public:
     explicit Circle(double radius, Point center)
-    :radius_(radius),center_(center){}
+    :IShape(0),radius_(radius),center_(center){}
     virtual ~Circle()override{}
 
     virtual void Draw()const override{
         //描画する
+
     }
 };
 
@@ -32,7 +40,7 @@ class BigCircle : public Circle
 {
 public:
     explicit BigCircle(double radius, Point center)
-    :circle(radius,center){}
+    :Circle(radius,center){}
     virtual ~BigCircle()override{}
 
     virtual void Draw()const override{
@@ -47,13 +55,13 @@ protected:
     Point top_left_;
 public:
     explicit Square(double side, Point top_left)
-    :side_(side),top_left_(top_left){}
+    :IShape(1),side_(side),top_left_(top_left){}
     virtual ~Square()override{}
 
     virtual void Draw()const override{
         //描画する
     }
-}
+};
 
 class BigSquare : public Square
 {
@@ -65,24 +73,22 @@ public:
     virtual void Draw()const override{
         //描画する
     }
-}
+};
 
 class DrawingTool
 {
 public:
     void DrawAllShapes(const std::vector<IShape*> &shapes)const{
+        
+        std::vector<IShape*> copy;
+        copy.assign(shapes.begin(),shapes.end());
 
-        for(const auto& shape : shapes){
-            //circleにダウンキャスト
-            Circle* s = dynamic_cast<Circle*>(shape);
-            if(s)shape->Draw();
-        }
-        for(const auto& shape : shapes){
-            //squareにダウンキャスト
-            Square* s = dynamic_cast<Square*>(shape);
-            if(s)s->Draw();
-        }
+        //rankが小さい順にソート
+        std::sort(copy.begin(),copy.end(),[](const IShape* &a, const IShape* &b){return a.GetRank() < b.getRank();});
 
+        for(const auto& shape : copy){
+            shape->Draw();
+        }
     }
 };
 
@@ -96,4 +102,10 @@ void testDrawAllShapes() {
   shapeList.push_back(circle);
   shapeList.push_back(square);
   drawingTool.DrawAllShapes(shapeList);
+}
+
+int main()
+{
+    testDrawAllShapes();
+    return 0;
 }
