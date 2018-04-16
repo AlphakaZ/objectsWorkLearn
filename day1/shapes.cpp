@@ -73,12 +73,12 @@ public:
     void DrawAllShapes(const std::vector<IShape*> &shapes)const{
 
         for(const auto& shape : shapes){
-            // shape->Draw();
+            //circleにダウンキャスト
             Circle* s = dynamic_cast<Circle*>(shape);
             if(s)shape->Draw();
         }
         for(const auto& shape : shapes){
-            // shape->Draw();
+            //squareにダウンキャスト
             Square* s = dynamic_cast<Square*>(shape);
             if(s)s->Draw();
         }
