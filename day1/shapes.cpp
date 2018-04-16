@@ -82,7 +82,7 @@ public:
 void testDrawAllShapes() {
   Circle* circle = new BigCircle(10, Point(20,20));
   Square* square = new BigSquare(/*side*/ 50, /*topLeft*/ Point(10,10));
-  DrawingTool drawingTool = new DrawingTool();
+  DrawingTool drawingTool;
   std::vector<IShape*> shapeList;
   shapeList.push_back(circle);
   shapeList.push_back(square);
