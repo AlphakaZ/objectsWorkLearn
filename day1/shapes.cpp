@@ -26,8 +26,8 @@ protected:
     Point center_;
 
 public:
-    explicit Circle(double radius, Point center)
-    :IShape(0),radius_(radius),center_(center){}
+    explicit Circle(double radius, Point center, int rank = 0)
+    :IShape(rank),radius_(radius),center_(center){}
     virtual ~Circle()override{}
 
     virtual void Draw()const override{
@@ -54,8 +54,8 @@ protected:
     double side_;
     Point top_left_;
 public:
-    explicit Square(double side, Point top_left)
-    :IShape(1),side_(side),top_left_(top_left){}
+    explicit Square(double side, Point top_left,int rank = 1)
+    :IShape(rank),side_(side),top_left_(top_left){}
     virtual ~Square()override{}
 
     virtual void Draw()const override{
